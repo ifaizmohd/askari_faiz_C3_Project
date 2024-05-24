@@ -29,8 +29,4 @@ public class RestaurantService {
     public List<Restaurant> getRestaurants() {
         return restaurants;
     }
-
-    public int getOrderValue(List<String> items) {
-        return -1;
-    }
 }
