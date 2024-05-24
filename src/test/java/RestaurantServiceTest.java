@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.*;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RestaurantServiceTest {
@@ -7,6 +10,7 @@ class RestaurantServiceTest {
     RestaurantService service = new RestaurantService();
     Restaurant restaurant;
     String restaurantName;
+    List<String> mockItems;
     //REFACTOR ALL THE REPEATED LINES OF CODE
     @BeforeEach
     public void setup() {
@@ -16,6 +20,7 @@ class RestaurantServiceTest {
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
         restaurantName = "Amelie's cafe";
+        mockItems =  new ArrayList<String>();
     }
 
 
@@ -58,4 +63,27 @@ class RestaurantServiceTest {
         assertEquals(initialNumberOfRestaurants + 1,service.getRestaurants().size());
     }
     //<<<<<<<<<<<<<<<<<<<<ADMIN: ADDING & REMOVING RESTAURANTS>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+    //<<<<<<<<<<<<<<<<<<<<<<<GET_ORDER_VALUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void if_restaurant_found_get_order_value_from_selected_restaurant_should_return_zero_for_empty_list() throws restaurantNotFoundException {
+        assertEquals(0, service.getOrderValueFromSelectedRestaurant(restaurantName, mockItems));
+    }
+
+    @Test
+    public void if_restaurant_found_get_order_value_from_selected_restaurant_should_return_the_sum_of_item_price() throws restaurantNotFoundException {
+        mockItems.add("Vegetable lasagne");
+        mockItems.add("Sweet corn soup");
+        assertEquals(388, service.getOrderValueFromSelectedRestaurant(restaurantName, mockItems));
+    }
+
+    @Test
+    public void if_restaurant_not_found_get_order_value_from_selected_restaurant_should_throw_restaurant_not_found_exception() throws restaurantNotFoundException {
+        restaurantName = "Test Restaurant";
+        mockItems.add("Vegetable lasagne");
+        mockItems.add("Sweet corn soup");
+        assertThrows(restaurantNotFoundException.class, () -> service.getOrderValueFromSelectedRestaurant(restaurantName ,mockItems));
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<<GET_ORDER_VALUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
