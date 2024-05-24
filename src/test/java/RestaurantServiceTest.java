@@ -63,4 +63,21 @@ class RestaurantServiceTest {
         assertEquals(initialNumberOfRestaurants + 1,service.getRestaurants().size());
     }
     //<<<<<<<<<<<<<<<<<<<<ADMIN: ADDING & REMOVING RESTAURANTS>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+    //<<<<<<<<<<<<<<<<<<<<<<<GET_ORDER_VALUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void get_order_value_should_return_zero_for_empty_list() {
+        List<String> mockItems = new ArrayList<String>();
+        assertEquals(0, service.getOrderValue(mockItems));
+    }
+
+    @Test
+    public void get_order_value_should_return_the_sum_of_item_price() {
+        List<String> mockItems = new ArrayList<String>();
+        mockItems.add("Vegetable lasagne");
+        mockItems.add("Sweet corn soup");
+        assertEquals(388, service.getOrderValue(mockItems));
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<<GET_ORDER_VALUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
