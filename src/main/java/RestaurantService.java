@@ -30,7 +30,8 @@ public class RestaurantService {
         return restaurants;
     }
 
-    public int getOrderValueFromSelectedRestaurant(String restaurantName, List<String> items) {
-        return -1;
+    public int getOrderValueFromSelectedRestaurant(String restaurantName, List<String> items) throws restaurantNotFoundException {
+        Restaurant restaurant = this.findRestaurantByName(restaurantName);
+        return restaurant.calculateOrderValue(items);
     }
 }
