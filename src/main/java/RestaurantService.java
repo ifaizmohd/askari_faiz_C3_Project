@@ -30,7 +30,7 @@ public class RestaurantService {
         return restaurants;
     }
 
-    public int getOrderValue(String restaurantName, List<String> items) {
+    public int getOrderValueFromSelectedRestaurant(String restaurantName, List<String> items) {
         return -1;
     }
 }

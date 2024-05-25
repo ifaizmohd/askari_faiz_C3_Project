@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
@@ -10,6 +12,7 @@ import static org.mockito.Mockito.doReturn;
 class RestaurantTest {
     Restaurant restaurant;
     Restaurant restaurantSpy;
+    List<String> mockItems;
     //REFACTOR ALL THE REPEATED LINES OF CODE
     @BeforeEach
     public void setup() {
@@ -19,6 +22,7 @@ class RestaurantTest {
         restaurantSpy = Mockito.spy(restaurant);
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
+        mockItems = new ArrayList<String>();
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -65,4 +69,24 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    @Test
+    public void calculate_order_value_should_return_zero_for_empty_list() {
+        assertEquals(0, restaurant.calculateOrderValue(mockItems));
+    }
+
+    @Test
+    public void calculate_order_value_should_return_the_sum_of_item_price() {
+        mockItems.add("Vegetable lasagne");
+        mockItems.add("Sweet corn soup");
+        assertEquals(388, restaurant.calculateOrderValue(mockItems));
+    }
+
+    @Test
+    public void calculate_order_value_should_not_includes_non_existing_items_and_return_the_sum_of_existing_item_price() {
+        mockItems.add("Vegetable lasagne");
+        mockItems.add("Sweet corn soup");
+        mockItems.add("Burgers");
+        assertEquals(388, restaurant.calculateOrderValue(mockItems));
+    }
 }
